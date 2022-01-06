@@ -29,4 +29,12 @@ interface APIServices {
     @GET
     fun getLocation(@Url url: String?): Call<LocationDetailVO>
 
+    /**
+     * Fetch all characters
+     */
+    @Headers("ContentType: application/json")
+    @GET("character/")
+    suspend fun getCharacterByPage(@Query("page")page:Int): CharacterResponseVO
+
+
 }

@@ -7,20 +7,24 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.clover.harish.R
 import com.clover.harish.adapter.CharacterAdapter
+import com.clover.harish.adapter.CharacterPagedAdapter
 import com.clover.harish.adapter.ItemClickListener
 import com.clover.harish.app.CloverApplication
 import com.clover.harish.databinding.CharacterBinding
 import com.clover.harish.models.CharacterVO
 import com.clover.harish.models.viewmodels.AppViewModelFactory
 import com.clover.harish.models.viewmodels.CharacterViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CharacterFragment : BaseFragment(), ItemClickListener<CharacterVO> {
     private lateinit var viewModel: CharacterViewModel
     private lateinit var binding: CharacterBinding
-    private lateinit var adapter: CharacterAdapter
+    private lateinit var adapter: CharacterPagedAdapter//CharacterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,14 +45,22 @@ class CharacterFragment : BaseFragment(), ItemClickListener<CharacterVO> {
     }
 
     fun init() {
-        adapter = CharacterAdapter(this)
+        adapter = CharacterPagedAdapter(this)
+        //CharacterAdapter(this)
+
+
         binding.characterList.adapter = adapter
+//        viewModel.charactersLiveData.observe(viewLifecycleOwner, {
+//            adapter.setResult(it.results)
+//        })
+//
+//        viewModel.fetchCharacters()
 
-        viewModel.charactersLiveData.observe(viewLifecycleOwner, {
-            adapter.setResult(it.results)
-        })
-
-        viewModel.fetchCharacters()
+        lifecycleScope.launch {
+            viewModel.characters.collectLatest { pagedData ->
+                adapter.submitData(pagedData)
+            }
+        }
     }
 
     override fun onItemClicked(characterVO: CharacterVO) {
