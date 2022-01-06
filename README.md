@@ -1,4 +1,4 @@
-# CloverAssignment
+# Clover Assignment
 Clover assignment
 
 ● What architectural decisions did you make and why? Elaborate on strengths and weaknesses.
