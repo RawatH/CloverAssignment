@@ -1,3 +1,5 @@
+package com.clover.harish.models
+
 import com.google.gson.annotations.SerializedName
 
 data class LocationVO (
