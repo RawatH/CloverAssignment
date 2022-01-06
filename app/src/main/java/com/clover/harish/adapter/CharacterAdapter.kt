@@ -51,12 +51,7 @@ class CharacterAdapter(val itemClickListener: ItemClickListener<CharacterVO>) :
     }
 }
 
-@BindingAdapter("avatar")
-fun setAvatar(view: ImageView, url: String) {
-    Glide.with(view.context)
-        .load(url)
-        .into(view)
-}
+
 
 interface ItemClickListener<T> {
     fun onItemClicked(t: T)

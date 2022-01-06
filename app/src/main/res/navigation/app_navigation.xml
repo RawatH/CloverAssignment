@@ -15,5 +15,7 @@
     <fragment
         android:id="@+id/characterDetailsFragment"
         android:name="com.clover.harish.view.CharacterDetailsFragment"
-        android:label="CharacterDetailsFragment" />
+        android:label="CharacterDetailsFragment" >
+
+    </fragment>
 </navigation>

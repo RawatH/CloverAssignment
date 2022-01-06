@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{characterVO.name}"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="15sp"
+            style="@style/nameStyle"
             app:layout_constraintBottom_toTopOf="@+id/characterStatus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -57,21 +56,24 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="@android:color/black"
+            android:background="@color/ltgrey"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/characterImg" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/characterImg"
             avatar="@{characterVO.image}"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

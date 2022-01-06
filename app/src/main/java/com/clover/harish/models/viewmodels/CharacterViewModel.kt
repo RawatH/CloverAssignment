@@ -1,6 +1,5 @@
 package com.clover.harish.models.viewmodels
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.clover.harish.app.CloverApplication
 import com.clover.harish.models.response.CharacterResponseVO
