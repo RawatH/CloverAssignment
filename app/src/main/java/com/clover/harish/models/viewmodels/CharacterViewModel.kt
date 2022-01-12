@@ -19,6 +19,7 @@ class CharacterViewModel(application: CloverApplication) : BaseViewModel(applica
     val errorLiveData: MutableLiveData<ErrorVO> = MutableLiveData()
 
 
+
     fun fetchCharacters() {
         characterRepository.getCharacters(charactersLiveData,errorLiveData)
     }
