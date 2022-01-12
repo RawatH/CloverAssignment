@@ -30,4 +30,25 @@ class CharacterRepository {
 
         })
     }
+
+    fun findCharactersByName(newText: String, charactersLiveData: MutableLiveData<CharacterResponseVO>,
+                             errorLiveData: MutableLiveData<ErrorVO>) {
+
+
+        val characterCall: Call<CharacterResponseVO> = AppServiceClient.getClient().getCharactersByName(newText)
+
+        characterCall.enqueue(object : Callback<CharacterResponseVO> {
+            override fun onResponse(
+                call: Call<CharacterResponseVO>,
+                response: Response<CharacterResponseVO>
+            ) {
+                charactersLiveData.postValue(response.body())
+            }
+
+            override fun onFailure(call: Call<CharacterResponseVO>, t: Throwable) {
+                errorLiveData.postValue(ErrorVO())
+            }
+
+        })
+    }
 }

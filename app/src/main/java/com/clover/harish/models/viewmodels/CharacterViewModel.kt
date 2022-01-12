@@ -23,6 +23,12 @@ class CharacterViewModel(application: CloverApplication) : BaseViewModel(applica
         characterRepository.getCharacters(charactersLiveData,errorLiveData)
     }
 
+    fun findCharacterByName(newText: String?) {
+      newText?.let {
+          characterRepository.findCharactersByName(newText,charactersLiveData,errorLiveData)
+      }
+    }
+
     val characters = Pager(PagingConfig(pageSize = 20)) {
         CharacterPagingSource(AppServiceClient.getClient())
     }.flow.cachedIn(viewModelScope)

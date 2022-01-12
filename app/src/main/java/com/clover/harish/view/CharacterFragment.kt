@@ -1,14 +1,17 @@
 package com.clover.harish.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import com.clover.harish.R
 import com.clover.harish.adapter.CharacterAdapter
 import com.clover.harish.adapter.CharacterPagedAdapter
@@ -18,6 +21,7 @@ import com.clover.harish.databinding.CharacterBinding
 import com.clover.harish.models.CharacterVO
 import com.clover.harish.models.viewmodels.AppViewModelFactory
 import com.clover.harish.models.viewmodels.CharacterViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -50,9 +54,17 @@ class CharacterFragment : BaseFragment(), ItemClickListener<CharacterVO> {
 
 
         binding.characterList.adapter = adapter
-//        viewModel.charactersLiveData.observe(viewLifecycleOwner, {
-//            adapter.setResult(it.results)
-//        })
+        viewModel.charactersLiveData.observe(viewLifecycleOwner, {
+            Log.d("", "")
+            it.results?.let {
+                lifecycleScope.launch {
+                    viewModel.characters.collectLatest { pagedData ->
+                        val pagingData: PagingData<CharacterVO> = PagingData.from(it)
+                        adapter.submitData(pagingData)
+                    }
+                }
+            }
+        })
 //
 //        viewModel.fetchCharacters()
 
@@ -61,6 +73,18 @@ class CharacterFragment : BaseFragment(), ItemClickListener<CharacterVO> {
                 adapter.submitData(pagedData)
             }
         }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.findCharacterByName(newText)
+                return true
+            }
+
+        })
     }
 
     override fun onItemClicked(characterVO: CharacterVO) {

@@ -23,6 +23,14 @@ interface APIServices {
     fun getCharacters(): Call<CharacterResponseVO>
 
     /**
+     * Fetch all characters
+     */
+    @Headers("ContentType: application/json")
+    @GET("character")
+    fun getCharactersByName(@Query("name")name:String): Call<CharacterResponseVO>
+
+
+    /**
      * Get location details
      */
     @Headers("ContentType: application/json")
